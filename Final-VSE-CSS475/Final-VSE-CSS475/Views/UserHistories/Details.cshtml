@@ -1,0 +1,42 @@
+﻿@model Final_VSE_CSS475.Models.UserHistory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>UserHistory</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Performance.Artist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Performance.Artist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ticket.PerformanceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ticket.PerformanceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User.LastName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.UserHistroryId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

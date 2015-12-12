@@ -1,0 +1,460 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_VSE_FinalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistName" />
+          </Key>
+          <Property Name="ArtistName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Review" Type="nchar" MaxLength="1" />
+          <Property Name="ArtistDescription" Type="nvarchar(max)" />
+          <Property Name="Genre" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Performance">
+          <Key>
+            <PropertyRef Name="PerformanceName" />
+          </Key>
+          <Property Name="PerformanceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Artist" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Venue" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="TimeStarts" Type="datetime" />
+          <Property Name="TimeEnds" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TicketNumber" Type="int" />
+          <Property Name="PerformanceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LoginName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" />
+          <Property Name="email" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserHistory">
+          <Key>
+            <PropertyRef Name="UserHistroryId" />
+          </Key>
+          <Property Name="UserHistroryId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userID" Type="int" Nullable="false" />
+          <Property Name="TicketID" Type="int" Nullable="false" />
+          <Property Name="PerformanceName" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueName" />
+          </Key>
+          <Property Name="VenueName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="City" Type="nvarchar" MaxLength="50" />
+          <Property Name="State" Type="nvarchar" MaxLength="4" />
+          <Property Name="ZIPCODE" Type="nvarchar" MaxLength="6" />
+          <Property Name="Address" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK_dbo_Performance_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistName" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="Artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Performance_Venue">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueName" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="Venue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Ticket_PerformanceName">
+          <End Role="Performance" Type="Self.Performance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performance">
+              <PropertyRef Name="PerformanceName" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="PerformanceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_PerformanceName">
+          <End Role="Performance" Type="Self.Performance" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performance">
+              <PropertyRef Name="PerformanceName" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="PerformanceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_TicketNumber">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_userID">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_VSE_FinalModelStoreContainer">
+          <EntitySet Name="Artist" EntityType="Self.Artist" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Performance" EntityType="Self.Performance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserHistory" EntityType="Self.UserHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Venue" EntityType="Self.Venue" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Performance_Artist" Association="Self.FK_dbo_Performance_Artist">
+            <End Role="Artist" EntitySet="Artist" />
+            <End Role="Performance" EntitySet="Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Performance_Venue" Association="Self.FK_dbo_Performance_Venue">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="Performance" EntitySet="Performance" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Ticket_PerformanceName" Association="Self.FK_dbo_Ticket_PerformanceName">
+            <End Role="Performance" EntitySet="Performance" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_PerformanceName" Association="Self.FK_dbo_UserHistory_PerformanceName">
+            <End Role="Performance" EntitySet="Performance" />
+            <End Role="UserHistory" EntitySet="UserHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_TicketNumber" Association="Self.FK_dbo_UserHistory_TicketNumber">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="UserHistory" EntitySet="UserHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_userID" Association="Self.FK_dbo_UserHistory_userID">
+            <End Role="User" EntitySet="User" />
+            <End Role="UserHistory" EntitySet="UserHistory" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_VSE_FinalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Artist">
+          <Key>
+            <PropertyRef Name="ArtistName" />
+          </Key>
+          <Property Name="ArtistName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Review" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="ArtistDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Genre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Performances" Relationship="Self.FK_dbo_Performance_Artist" FromRole="Artist" ToRole="Performance" />
+        </EntityType>
+        <EntityType Name="Performance">
+          <Key>
+            <PropertyRef Name="PerformanceName" />
+          </Key>
+          <Property Name="PerformanceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Artist" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Venue" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="TimeStarts" Type="DateTime" Precision="3" />
+          <Property Name="TimeEnds" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Artist1" Relationship="Self.FK_dbo_Performance_Artist" FromRole="Performance" ToRole="Artist" />
+          <NavigationProperty Name="Venue1" Relationship="Self.FK_dbo_Performance_Venue" FromRole="Performance" ToRole="Venue" />
+          <NavigationProperty Name="Tickets" Relationship="Self.FK_dbo_Ticket_PerformanceName" FromRole="Performance" ToRole="Ticket" />
+          <NavigationProperty Name="UserHistories" Relationship="Self.FK_dbo_UserHistory_PerformanceName" FromRole="Performance" ToRole="UserHistory" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="TicketId" />
+          </Key>
+          <Property Name="TicketId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TicketNumber" Type="Int32" />
+          <Property Name="PerformanceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Performance" Relationship="Self.FK_dbo_Ticket_PerformanceName" FromRole="Ticket" ToRole="Performance" />
+          <NavigationProperty Name="UserHistories" Relationship="Self.FK_dbo_UserHistory_TicketNumber" FromRole="Ticket" ToRole="UserHistory" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LoginName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="UserHistories" Relationship="Self.FK_dbo_UserHistory_userID" FromRole="User" ToRole="UserHistory" />
+        </EntityType>
+        <EntityType Name="UserHistory">
+          <Key>
+            <PropertyRef Name="UserHistroryId" />
+          </Key>
+          <Property Name="UserHistroryId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userID" Type="Int32" Nullable="false" />
+          <Property Name="TicketID" Type="Int32" Nullable="false" />
+          <Property Name="PerformanceName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Performance" Relationship="Self.FK_dbo_UserHistory_PerformanceName" FromRole="UserHistory" ToRole="Performance" />
+          <NavigationProperty Name="Ticket" Relationship="Self.FK_dbo_UserHistory_TicketNumber" FromRole="UserHistory" ToRole="Ticket" />
+          <NavigationProperty Name="User" Relationship="Self.FK_dbo_UserHistory_userID" FromRole="UserHistory" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="VenueName" />
+          </Key>
+          <Property Name="VenueName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="State" Type="String" MaxLength="4" FixedLength="false" Unicode="true" />
+          <Property Name="ZIPCODE" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Performances" Relationship="Self.FK_dbo_Performance_Venue" FromRole="Venue" ToRole="Performance" />
+        </EntityType>
+        <Association Name="FK_dbo_Performance_Artist">
+          <End Role="Artist" Type="Self.Artist" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Artist">
+              <PropertyRef Name="ArtistName" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="Artist" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Performance_Venue">
+          <End Role="Venue" Type="Self.Venue" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Performance" Type="Self.Performance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="VenueName" />
+            </Principal>
+            <Dependent Role="Performance">
+              <PropertyRef Name="Venue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Ticket_PerformanceName">
+          <End Role="Performance" Type="Self.Performance" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performance">
+              <PropertyRef Name="PerformanceName" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="PerformanceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_PerformanceName">
+          <End Role="Performance" Type="Self.Performance" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Performance">
+              <PropertyRef Name="PerformanceName" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="PerformanceName" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_TicketNumber">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="TicketId" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="TicketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_UserHistory_userID">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="UserHistory" Type="Self.UserHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserId" />
+            </Principal>
+            <Dependent Role="UserHistory">
+              <PropertyRef Name="userID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_VSE_FinalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Artists" EntityType="Self.Artist" />
+          <EntitySet Name="Performances" EntityType="Self.Performance" />
+          <EntitySet Name="Tickets" EntityType="Self.Ticket" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="UserHistories" EntityType="Self.UserHistory" />
+          <EntitySet Name="Venues" EntityType="Self.Venue" />
+          <AssociationSet Name="FK_dbo_Performance_Artist" Association="Self.FK_dbo_Performance_Artist">
+            <End Role="Artist" EntitySet="Artists" />
+            <End Role="Performance" EntitySet="Performances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Performance_Venue" Association="Self.FK_dbo_Performance_Venue">
+            <End Role="Venue" EntitySet="Venues" />
+            <End Role="Performance" EntitySet="Performances" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Ticket_PerformanceName" Association="Self.FK_dbo_Ticket_PerformanceName">
+            <End Role="Performance" EntitySet="Performances" />
+            <End Role="Ticket" EntitySet="Tickets" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_PerformanceName" Association="Self.FK_dbo_UserHistory_PerformanceName">
+            <End Role="Performance" EntitySet="Performances" />
+            <End Role="UserHistory" EntitySet="UserHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_TicketNumber" Association="Self.FK_dbo_UserHistory_TicketNumber">
+            <End Role="Ticket" EntitySet="Tickets" />
+            <End Role="UserHistory" EntitySet="UserHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_UserHistory_userID" Association="Self.FK_dbo_UserHistory_userID">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserHistory" EntitySet="UserHistories" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_VSE_FinalModelStoreContainer" CdmEntityContainer="db_VSE_FinalEntities">
+          <EntitySetMapping Name="Artists">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.Artist">
+              <MappingFragment StoreEntitySet="Artist">
+                <ScalarProperty Name="ArtistName" ColumnName="ArtistName" />
+                <ScalarProperty Name="Review" ColumnName="Review" />
+                <ScalarProperty Name="ArtistDescription" ColumnName="ArtistDescription" />
+                <ScalarProperty Name="Genre" ColumnName="Genre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Performances">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.Performance">
+              <MappingFragment StoreEntitySet="Performance">
+                <ScalarProperty Name="PerformanceName" ColumnName="PerformanceName" />
+                <ScalarProperty Name="Artist" ColumnName="Artist" />
+                <ScalarProperty Name="Venue" ColumnName="Venue" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="TimeStarts" ColumnName="TimeStarts" />
+                <ScalarProperty Name="TimeEnds" ColumnName="TimeEnds" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tickets">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="TicketId" ColumnName="TicketId" />
+                <ScalarProperty Name="TicketNumber" ColumnName="TicketNumber" />
+                <ScalarProperty Name="PerformanceName" ColumnName="PerformanceName" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LoginName" ColumnName="LoginName" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserHistories">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.UserHistory">
+              <MappingFragment StoreEntitySet="UserHistory">
+                <ScalarProperty Name="UserHistroryId" ColumnName="UserHistroryId" />
+                <ScalarProperty Name="userID" ColumnName="userID" />
+                <ScalarProperty Name="TicketID" ColumnName="TicketID" />
+                <ScalarProperty Name="PerformanceName" ColumnName="PerformanceName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venues">
+            <EntityTypeMapping TypeName="db_VSE_FinalModel.Venue">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="VenueName" ColumnName="VenueName" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="ZIPCODE" ColumnName="ZIPCODE" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

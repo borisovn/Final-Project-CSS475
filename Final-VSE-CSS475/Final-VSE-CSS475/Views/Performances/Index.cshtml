@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Final_VSE_CSS475.Models.Performance>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <h2>List of Perfomance</h2>
+
+    <p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+ @using (Html.BeginForm())
+ {
+    <div class="well well-sm">
+        <div class="form-inline">
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    Performance
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("name")
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-10">
+                    Artist
+                </div>
+                <div class="col-md-10">
+                    @Html.TextBox("artist")
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Filter" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        </div>
+
+        }
+
+        @foreach (var item in Model)
+        {
+
+            <div class="well well-sm">
+                <h3><b>@Html.DisplayFor(modelItem => item.PerformanceName)</b> <br /> Artist: @Html.DisplayFor(modelItem => item.Artist1.ArtistName) </h3>
+                <div class="panel-body">
+                    <b>@Html.DisplayNameFor(model => model.Description):</b><br />
+                    <p> @Html.DisplayFor(modelItem => item.Description) </p>
+                    <b>@Html.DisplayNameFor(model => model.Quantity)</b>: @Html.DisplayFor(modelItem => item.Quantity) <br />
+                    <b>@Html.DisplayNameFor(model => model.TimeStarts)</b> : @Html.DisplayFor(modelItem => item.TimeStarts) <br />
+                    <b>@Html.DisplayNameFor(model => model.TimeEnds)</b>  :   @Html.DisplayFor(modelItem => item.TimeEnds)
+
+                </div>
+                <h4> <b>Venue </b> @Html.DisplayFor(modelItem => item.Venue1.VenueName)</h4>
+                <b>Address </b> @Html.DisplayFor(modelItem => item.Venue1.Address) <br />
+                <b>City </b> @Html.DisplayFor(modelItem => item.Venue1.City) <br />
+                <b>State </b> @Html.DisplayFor(modelItem => item.Venue1.State) <br />
+
+                @Html.ActionLink("Edit", "Edit", new { id = item.PerformanceName }) |
+                @Html.ActionLink("Details", "Details", new { id = item.PerformanceName }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.PerformanceName }) |
+                @Html.ActionLink("Artist", "Details", "Artists", new { id = item.Artist1.ArtistName }, null) |
+                @Html.ActionLink("Purchase", "Purchase", new { id = item.PerformanceName })
+            </div>
+
+        }
+
+

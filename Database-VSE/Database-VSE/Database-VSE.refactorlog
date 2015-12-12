@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="32fc6ebf-ca34-4b44-a94c-e6b2b5dc20ae" ChangeDateTime="12/11/2015 06:55:57">
+    <Property Name="ElementName" Value="[dbo].[User].[User_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Userd" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="3119067b-7ad1-48a5-b052-fa839b5b9eb6" ChangeDateTime="12/11/2015 06:56:05">
+    <Property Name="ElementName" Value="[dbo].[User].[Userd]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="dd87619f-b041-465d-beb3-79d39d1901b0" ChangeDateTime="12/11/2015 06:56:09">
+    <Property Name="ElementName" Value="[dbo].[UserHistory].[UserHistory_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserHistory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserHistoryId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fff7bc28-0078-49c0-bf05-0abd52b8605d" ChangeDateTime="12/11/2015 06:56:35">
+    <Property Name="ElementName" Value="[dbo].[Ticket].[Ticket_Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ticket]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="TicketId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="6a1bda1a-e061-4e3e-83b2-a2d507e7b76b" ChangeDateTime="12/11/2015 08:01:12">
+    <Property Name="ElementName" Value="[dbo].[User].[UserId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e4c1bd86-f23b-470b-9dd5-ba6af2f6c365" ChangeDateTime="12/11/2015 08:02:04">
+    <Property Name="ElementName" Value="[dbo].[Ticket].[TicketId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Ticket]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Id" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5f9951f8-5922-44d5-b354-b0330456680f" ChangeDateTime="12/11/2015 08:27:54">
+    <Property Name="ElementName" Value="[dbo].[User].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserID" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="f069a1cb-1d68-41a7-b181-be0c61e814e7" ChangeDateTime="12/11/2015 08:27:59">
+    <Property Name="ElementName" Value="[dbo].[User].[UserID]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[User]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="ddc5ede1-4323-4f37-98ff-1c0f332051c0" ChangeDateTime="12/11/2015 08:28:58">
+    <Property Name="ElementName" Value="[dbo].[UserHistory].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[UserHistory]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UserHistroryId" />
+  </Operation>
+</Operations>

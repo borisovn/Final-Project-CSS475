@@ -1,0 +1,48 @@
+﻿@model IEnumerable<Final_VSE_CSS475.Models.UserHistory>
+
+@{
+    ViewBag.Title = "MyHistory";
+}
+
+<h2>MyHistory</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Performance.TimeStarts)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ticket.PerformanceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User.LoginName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Performance.TimeStarts)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ticket.PerformanceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.User.LoginName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.UserHistroryId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.UserHistroryId }) |
+            @Html.ActionLink("Cancel Ticket", "Delete", new { id=item.UserHistroryId })
+        </td>
+    </tr>
+}
+
+</table>
+<div>
+    @Html.ActionLink("Back to User", "Index")
+</div>
